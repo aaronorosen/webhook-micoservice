@@ -56,10 +56,22 @@ async function deleteRecord(req) {
     };
 }
 
+async function triggerWebhook(req) {
+    const { record, response } = await service.triggerWebhook(req.params.uuid, req.body, req.state);
+
+    return {
+        webhookResponse: response,
+        webhook: record,
+        status: 'ok',
+        error: false,
+    };
+}
+
 module.exports = {
     post,
     getByUUID,
     listAll,
     updateRecord,
     deleteRecord,
+    triggerWebhook,
 };

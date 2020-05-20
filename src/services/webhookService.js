@@ -1,5 +1,6 @@
 const { newErrors } = require('../errors');
 const webhookLoDB = require('../dataSource/webhookLoDB');
+const webhookTrigger = require('../dataSource/webhookTrigger');
 
 async function createRecord(webhook, state) {
     try {
@@ -46,7 +47,6 @@ async function updateRecord(uuid, webhook, state) {
         }
         return record;
     } catch (err) {
-        console.log(err);
         state.logger.error({ webhookServiceError: err }, 'Error on webhookService.updateRecord');
         throw err;
     }
@@ -63,12 +63,26 @@ async function deleteRecord(uuid, state) {
         }
         return record;
     } catch (err) {
-        console.log(err);
         state.logger.error({ webhookServiceError: err }, 'Error on webhookService.deleteRecord');
         throw err;
     }
 }
 
+async function triggerWebhook(uuid, body, state) {
+    try {
+        const record = await webhookLoDB.getRecordByUUID(uuid, state);
+        if (!record) {
+            state.logger.error({ webhookServiceError: `404 Record not found: ${uuid}` });
+            throw newErrors.notfound(`uuid:${uuid} not found`);
+        }
+
+        const response = await webhookTrigger.post(record, body, state);
+        return { response, record };
+    } catch (err) {
+        state.logger.error({ webhookServiceError: err }, 'Error on webhookService.getRecordByUUID');
+        throw err;
+    }
+}
 
 module.exports = {
     createRecord,
@@ -76,4 +90,5 @@ module.exports = {
     getAllRecords,
     updateRecord,
     deleteRecord,
+    triggerWebhook,
 };
