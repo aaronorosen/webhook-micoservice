@@ -9,6 +9,7 @@ module.exports = {
         "linebreak-style": 0,
         'max-len':  ["error", { "code": 140 }],
         "no-underscore-dangle": 1,
+        "no-param-reassign": 0,
     },
     "plugins": [
         "security"

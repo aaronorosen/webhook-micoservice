@@ -12,8 +12,8 @@ async function create(webhook, state) {
 }
 
 async function getRecordByUUID(uuid, state) {
-    const record = await db('webhook').find({uuid}).value();
-    // if(!record) throw 
+    const record = await db('webhook').find({ uuid }).value();
+    state.logger.info({ webhookLoDB: { getRecordByUUID: record } }, 'Getting webhook');
     return record;
 }
 
@@ -21,4 +21,3 @@ module.exports = {
     create,
     getRecordByUUID,
 };
-

@@ -1,4 +1,4 @@
-const  { newErrors } = require('../errors');
+const { newErrors } = require('../errors');
 const webhookLoDB = require('../dataSource/webhookLoDB');
 
 async function createRecord(webhook, state) {
@@ -11,11 +11,11 @@ async function createRecord(webhook, state) {
     }
 }
 
-async function getRecordByUUID(uuid, state){
+async function getRecordByUUID(uuid, state) {
     try {
         const record = await webhookLoDB.getRecordByUUID(uuid, state);
-        if(!record) {
-            state.logger.error({ webhookServiceError: `404 Record not found: ${uuid}` }, );
+        if (!record) {
+            state.logger.error({ webhookServiceError: `404 Record not found: ${uuid}` });
             throw newErrors.notfound(`uuid:${uuid} not found`);
         }
         return record;
