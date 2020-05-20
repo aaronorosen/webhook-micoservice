@@ -17,6 +17,19 @@ async function post(req) {
     };
 }
 
+async function getByUUID(req) {
+
+    console.log(req.params.uuid)
+    const webhook = await service.getRecordByUUID(req.params.uuid, req.state);
+
+    return {
+        webhook,
+        status: 'ok',
+        error: false,
+    };
+}
+
 module.exports = {
     post,
+    getByUUID,
 };

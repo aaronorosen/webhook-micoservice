@@ -11,7 +11,14 @@ async function create(webhook, state) {
     return webhook;
 }
 
+async function getRecordByUUID(uuid, state) {
+    const record = await db('webhook').find({uuid}).value();
+    // if(!record) throw 
+    return record;
+}
+
 module.exports = {
     create,
+    getRecordByUUID,
 };
 

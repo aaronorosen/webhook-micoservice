@@ -25,6 +25,8 @@ describe('Testing webhookController full flow', () => {
 
     describe('webhookController api test', () => {
 
+        let uuid = null;
+
         it('POST webhook/ endpoint 400 error', async () => {
             const { body } = await out.users.anonymous
                 .make('post', urls.api.webhook())
@@ -55,6 +57,34 @@ describe('Testing webhookController full flow', () => {
             expect(body.webhook.content_type).to.be.eql('application/json');
             expect(body.status).to.be.eql('ok');
             expect(body.error).to.be.eql(false);
+
+            uuid = body.webhook.uuid;
+        });
+
+
+        it('GET webhook/:uuid endpoint succesfull call', async () => {
+            const { body } = await out.users.anonymous
+                .make('get', urls.api.webhook()+uuid)
+                .send()
+                .expect(200);
+
+            expect(body.webhook.payload_url).to.be.eql('google.com');
+            expect(body.webhook.content_type).to.be.eql('application/json');
+            expect(body.status).to.be.eql('ok');
+            expect(body.error).to.be.eql(false);
+
+        });
+
+        it('GET webhook/:uuid endpoint 404 call', async () => {
+            const { body } = await out.users.anonymous
+                .make('get', urls.api.webhook()+'unknownID')
+                .send()
+                .expect(404);
+            
+            expect(body['odata.error'].code).to.be.eql(10166);
+            expect(body['odata.error'].message.lang).to.be.eql('en-US');
+            expect(body['odata.error'].message.value).to.be
+                .eql('uuid:unknownID not found');
         });
 
         /* it('aRoute/ endpoint failed call due to validation', async () => {
