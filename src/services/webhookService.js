@@ -21,7 +21,7 @@ async function getRecordByUUID(uuid, state) {
         return record;
     } catch (err) {
         console.log(err);
-        state.logger.error({ webhookServiceError: err }, 'Error on webhookService.create');
+        state.logger.error({ webhookServiceError: err }, 'Error on webhookService.getRecordByUUID');
         throw err;
     }
 }
@@ -31,7 +31,7 @@ async function getAllRecords(state) {
         const records = await webhookLoDB.getAllRecords(state);
         return records;
     } catch (err) {
-        state.logger.error({ webhookServiceError: err }, 'Error on webhookService.create');
+        state.logger.error({ webhookServiceError: err }, 'Error on webhookService.getAllRecords');
         throw err;
     }
 }
@@ -47,14 +47,33 @@ async function updateRecord(uuid, webhook, state) {
         return record;
     } catch (err) {
         console.log(err);
-        state.logger.error({ webhookServiceError: err }, 'Error on webhookService.create');
+        state.logger.error({ webhookServiceError: err }, 'Error on webhookService.updateRecord');
         throw err;
     }
 }
+
+
+async function deleteRecord(uuid, state) {
+    try {
+        const record = await webhookLoDB.deleteRecord(uuid, state);
+
+        if (!record) {
+            state.logger.error({ webhookServiceError: `404 Record not found: ${uuid}` });
+            throw newErrors.notfound(`uuid:${uuid} not found`);
+        }
+        return record;
+    } catch (err) {
+        console.log(err);
+        state.logger.error({ webhookServiceError: err }, 'Error on webhookService.deleteRecord');
+        throw err;
+    }
+}
+
 
 module.exports = {
     createRecord,
     getRecordByUUID,
     getAllRecords,
     updateRecord,
+    deleteRecord,
 };

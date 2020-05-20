@@ -46,9 +46,20 @@ async function updateRecord(req) {
     };
 }
 
+async function deleteRecord(req) {
+    const webhook = await service.deleteRecord(req.params.uuid, req.state);
+
+    return {
+        webhook,
+        status: 'ok',
+        error: false,
+    };
+}
+
 module.exports = {
     post,
     getByUUID,
     listAll,
     updateRecord,
+    deleteRecord,
 };

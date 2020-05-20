@@ -34,8 +34,20 @@ async function updateRecord(uuid, webhook, state) {
     db('webhook').push(record);
     await db.save();
 
-    state.logger.info({ webhookLoDB: { getRecordByUUID: record } }, 'Updating webhook');
+    state.logger.info({ webhookLoDB: { updateRecord: record } }, 'Updating webhook');
     return record;
+}
+
+async function deleteRecord(uuid, state) {
+    const originalRecord = await db('webhook').find({ uuid }).value();
+
+    if (!originalRecord) return null;
+
+    await db('webhook').remove({ uuid });
+    await db.save();
+    state.logger.info({ webhookLoDB: { deleteRecord: originalRecord } }, 'Deleting webhook');
+
+    return originalRecord;
 }
 
 module.exports = {
@@ -43,4 +55,5 @@ module.exports = {
     getRecordByUUID,
     getAllRecords,
     updateRecord,
+    deleteRecord,
 };

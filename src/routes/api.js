@@ -31,4 +31,10 @@ router.put(
     handleController(webhookController.updateRecord),
 );
 
+router.delete(
+    '/webhook/:uuid',
+    // validateReqParams(validation.webhookPost),
+    handleController(webhookController.deleteRecord),
+);
+
 exports.router = router;
