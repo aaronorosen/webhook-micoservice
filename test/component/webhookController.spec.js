@@ -138,9 +138,9 @@ describe('Testing webhookController full flow', () => {
             expect(body.error).to.be.eql(false);
         });
 
-        it('PUT webhook/:uuid update endpoint 404 call', async () => {
+        it('DELETE webhook/:uuid delete endpoint 404 call', async () => {
             const { body } = await out.users.anonymous
-                .make('put', urls.api.webhook()+uuid)
+                .make('delete', urls.api.webhook()+uuid)
                 .send()
                 .expect(404);
             
