@@ -17,7 +17,14 @@ async function getRecordByUUID(uuid, state) {
     return record;
 }
 
+async function getAllRecords(state) {
+    const records = await db('webhook').value();
+    state.logger.info({ webhookLoDB: { getAllRecords: records } }, 'listing all webhooks');
+    return records;
+}
+
 module.exports = {
     create,
     getRecordByUUID,
+    getAllRecords,
 };

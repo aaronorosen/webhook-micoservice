@@ -87,6 +87,17 @@ describe('Testing webhookController full flow', () => {
                 .eql('uuid:unknownID not found');
         });
 
+        it('GET webhook/ list all records endpoint succesfull call', async () => {
+            const { body } = await out.users.anonymous
+                .make('get', urls.api.webhook())
+                .send()
+                .expect(200);
+            
+            expect(body.status).to.be.eql('ok');
+            expect(body.error).to.be.eql(false);
+            expect(body.total).to.be.gt(0);
+        });
+
         /* it('aRoute/ endpoint failed call due to validation', async () => {
             const { body } = await out.users.anonymous
                 .make('post', urls.api.base())

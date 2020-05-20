@@ -26,7 +26,18 @@ async function getRecordByUUID(uuid, state) {
     }
 }
 
+async function getAllRecords(state) {
+    try {
+        const records = await webhookLoDB.getAllRecords(state);
+        return records;
+    } catch (err) {
+        state.logger.error({ webhookServiceError: err }, 'Error on webhookService.create');
+        throw err;
+    }
+}
+
 module.exports = {
     createRecord,
     getRecordByUUID,
+    getAllRecords,
 };

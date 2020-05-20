@@ -27,7 +27,20 @@ async function getByUUID(req) {
     };
 }
 
+async function listAll(req) {
+    // const records = await service.getAllRecords(req.state);
+
+    const records = await service.getAllRecords(req.state);
+    return {
+        records,
+        total: records.length,
+        status: 'ok',
+        error: false,
+    };
+}
+
 module.exports = {
     post,
     getByUUID,
+    listAll,
 };

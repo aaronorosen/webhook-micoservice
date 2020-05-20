@@ -19,4 +19,10 @@ router.get(
     handleController(webhookController.getByUUID),
 );
 
+router.get(
+    '/webhook/',
+    // validateReqParams(validation.webhookPost),
+    handleController(webhookController.listAll),
+);
+
 exports.router = router;
