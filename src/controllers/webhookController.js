@@ -17,7 +17,6 @@ async function post(req) {
 }
 
 async function getByUUID(req) {
-    console.log(req.params.uuid);
     const webhook = await service.getRecordByUUID(req.params.uuid, req.state);
 
     return {
@@ -28,8 +27,6 @@ async function getByUUID(req) {
 }
 
 async function listAll(req) {
-    // const records = await service.getAllRecords(req.state);
-
     const records = await service.getAllRecords(req.state);
     return {
         records,
