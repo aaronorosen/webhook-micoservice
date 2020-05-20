@@ -3,14 +3,14 @@ const {
     validateReqParams,
     handleController,
 } = require('../middleware');
-const aController = require('../controllers/aController');
+const webhookController = require('../controllers/webhookController');
 const validation = require('./validation');
 
 const router = express.Router();
 router.post(
-    '/aRoute',
-    validateReqParams(validation.aRoute),
-    handleController(aController.getData),
+    '/webhook',
+    validateReqParams(validation.webhookPost),
+    handleController(webhookController.post),
 );
 
 exports.router = router;

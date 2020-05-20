@@ -1,11 +1,12 @@
 const joi = require('joi');
 
-const aRoute = joi.object().keys({
+const webhookPost = joi.object().keys({
     body: joi.object().keys({
-        requiredTestField: joi.string().required(),
+        payload_url: joi.string().required(),
+        content_type: 'application/json',
     }).required(),
 });
 
 module.exports = {
-    aRoute,
+    webhookPost,
 };

@@ -11,7 +11,7 @@
     "url": "https://github.com/aaronorosen/webhook-micoservice.git"
   },
   "scripts": {
-    "start": "node --max-old-space-size=${CUSTOM_MAX_OLD_SPACE_SIZE:-460} src/index.js",
+    "start": "node --max-old-space-size=460 src/index.js",
     "lint": "eslint ./src --ext .js",
     "lint-fix": "eslint ./src --ext .js --fix",
     "mocha-test": "cross-env-shell MOCHA_REPORTER?=spec mocha --timeout 30000 --exit --reporter ${MOCHA_REPORTER}",
@@ -33,6 +33,7 @@
     "express": "^4.17.1",
     "joi": "^14.3.1",
     "lodash": "^4.17.15",
+    "lodb": "^0.5.2",
     "read-pkg-up": "^6.0.0",
     "uuid": "^3.3.3"
   },

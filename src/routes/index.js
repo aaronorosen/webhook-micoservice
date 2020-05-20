@@ -10,7 +10,7 @@ const router = express.Router();
 // endregion
 
 // region custom routes
-router.use('/api/v1/aController/', api.router);
+router.use('/api/', api.router);
 // endregion
 
 router.use(middleware.errorHandler);
