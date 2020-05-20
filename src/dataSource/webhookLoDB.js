@@ -1,5 +1,6 @@
 const lodb = require('lodb');
 const uuidv4 = require('uuid/v4');
+const _ = require('lodash');
 
 const db = lodb('db.json');
 
@@ -23,8 +24,23 @@ async function getAllRecords(state) {
     return records;
 }
 
+async function updateRecord(uuid, webhook, state) {
+    const originalRecord = await db('webhook').find({ uuid }).value();
+
+    if (!originalRecord) return null;
+    const record = _.merge({}, originalRecord, webhook);
+
+    await db('webhook').remove({ uuid });
+    db('webhook').push(record);
+    await db.save();
+
+    state.logger.info({ webhookLoDB: { getRecordByUUID: record } }, 'Updating webhook');
+    return record;
+}
+
 module.exports = {
     create,
     getRecordByUUID,
     getAllRecords,
+    updateRecord,
 };

@@ -36,8 +36,25 @@ async function getAllRecords(state) {
     }
 }
 
+async function updateRecord(uuid, webhook, state) {
+    try {
+        const record = await webhookLoDB.updateRecord(uuid, webhook, state);
+
+        if (!record) {
+            state.logger.error({ webhookServiceError: `404 Record not found: ${uuid}` });
+            throw newErrors.notfound(`uuid:${uuid} not found`);
+        }
+        return record;
+    } catch (err) {
+        console.log(err);
+        state.logger.error({ webhookServiceError: err }, 'Error on webhookService.create');
+        throw err;
+    }
+}
+
 module.exports = {
     createRecord,
     getRecordByUUID,
     getAllRecords,
+    updateRecord,
 };

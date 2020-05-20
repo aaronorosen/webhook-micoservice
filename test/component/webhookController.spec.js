@@ -98,6 +98,33 @@ describe('Testing webhookController full flow', () => {
             expect(body.total).to.be.gt(0);
         });
 
+        it('PUT webhook/ update webhook sucessfull call', async () => {
+            const { body } = await out.users.anonymous
+                .make('put', urls.api.webhook()+uuid)
+                .send({
+                    payload_url: 'updatedPayload.com',
+                })
+                .expect(200);
+    
+            expect(body.webhook.payload_url).to.be.eql('updatedPayload.com');
+            expect(body.webhook.content_type).to.be.eql('application/json');
+            expect(body.webhook.uuid).to.be.eql(uuid);
+            expect(body.status).to.be.eql('ok');
+            expect(body.error).to.be.eql(false);
+        });
+
+        it('PUT webhook/:uuid update endpoint 404 call', async () => {
+            const { body } = await out.users.anonymous
+                .make('put', urls.api.webhook()+'unknownID')
+                .send()
+                .expect(404);
+            
+            expect(body['odata.error'].code).to.be.eql(10166);
+            expect(body['odata.error'].message.lang).to.be.eql('en-US');
+            expect(body['odata.error'].message.value).to.be
+                .eql('uuid:unknownID not found');
+        });
+
         /* it('aRoute/ endpoint failed call due to validation', async () => {
             const { body } = await out.users.anonymous
                 .make('post', urls.api.base())

@@ -36,8 +36,19 @@ async function listAll(req) {
     };
 }
 
+async function updateRecord(req) {
+    const webhook = await service.updateRecord(req.params.uuid, req.body, req.state);
+
+    return {
+        webhook,
+        status: 'ok',
+        error: false,
+    };
+}
+
 module.exports = {
     post,
     getByUUID,
     listAll,
+    updateRecord,
 };

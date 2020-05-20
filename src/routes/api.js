@@ -25,4 +25,10 @@ router.get(
     handleController(webhookController.listAll),
 );
 
+router.put(
+    '/webhook/:uuid',
+    // validateReqParams(validation.webhookPost),
+    handleController(webhookController.updateRecord),
+);
+
 exports.router = router;
