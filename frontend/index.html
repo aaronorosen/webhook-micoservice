@@ -1,0 +1,218 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>divers config</title>
+    <!-- Latest compiled and minified Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+</head>
+<body>
+
+<!-- container -->
+<div class="container">
+    <div class="page-header">
+        <h4>Create Webhook</h4>
+    </div>
+    <div class="row">
+        <form class="form-group" id="product-form">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <input type="text" name="url" class="form-control" placeholder="Enter Webhook URL" id="url">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <input type="text" name="description" class="form-control" placeholder="Decription" id="description">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    Content type
+                    <select  name="content_type"  class="form-control" id="content_type" placeholder="Enter Webhook content-type" >
+                        <option value="application/json">aplication/json</option>
+                        <option value="application/x-www-form-urlencoded">application/x-www-form-urlencoded</option>
+                        <option value="multipart/form-data">multipart/form-data</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-md-2">
+                <div class="form-group">
+                    <input type="button" name="insert" id="insert" onclick="insertRecord();"
+                           class="btn btn-primary btn-sm"
+                           value="Create new Webhook">
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="page-header">
+        <h4>Webhook List</h4>
+    </div>
+    <div class="row">
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th width="10%">Actions</th>
+                    <th width="10%">URL</th>
+                    <th width="5%">UUID</th>
+                    <th width="5%">Description</th>
+                    <th width="10%">content-type</th>
+                </tr>
+                </thead>
+                <tbody id="table-data">
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- Trigger the modal with a button -->
+    <button class="btn btn-info btn-lg" data-target="#myModal" data-toggle="modal" id="modalButtonOpen"
+             type="button">
+        Open Modal
+    </button>
+    <!-- Modal (Pop up when detail button clicked) -->
+    <div aria-hidden="true" aria-labelledby="myModalLabel" class="modal fade" id="myModal" role="dialog" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button aria-label="Close" class="close" data-dismiss="modal" id="modalButtonClose" type="button">
+                        Close
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">
+                        Product Editor
+                    </h4>
+                    <form id="product-update-form">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <input type="text" name="update_url" class="form-control" placeholder="Enter Webhook URL" id="update_url">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <input type="text" name="update_description" class="form-control" placeholder="Decription" id="update_description">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                Content type
+                                <select  name="update_content_type"  class="form-control" id="update_content_type" placeholder="Enter Webhook content-type" >
+                                    <option value="application/json">aplication/json</option>
+                                    <option value="application/x-www-form-urlencoded">application/x-www-form-urlencoded</option>
+                                    <option value="multipart/form-data">multipart/form-data</option>
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <input class="btn btn-primary btn-sm" onclick="submitUpdate();" id="submit_update" name="submit_update" type="button"
+                           value="Save Changes"/>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> <!-- end .container -->
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<!-- Latest compiled and minified Bootstrap JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+ <!--  ALL AJAX SCRIPT WILL COME HERE -->
+  
+<script>
+
+    const server_url = "http://localhost:3000";
+    function loadList(){
+        $.get( server_url+"/api/webhook", function( data ) {
+            console.log(data.records);
+            $(".data-row").remove();
+            data.records.forEach(webhook => {
+                $("#table-data").append($(`
+                    <tr class='data-row'>
+                        <td>
+                            <button data-target="#myModal" data-toggle="modal" id="modalButtonOpen" type="button" onclick='getRecordForUpdate("${webhook.uuid}")'>
+                                Edit
+                            </button>
+
+                            <button onclick='deleteRecord("${webhook.uuid}")'>Delete</button>
+                        </td>
+                        <td>${webhook.payload_url}</td>
+                        <td>${webhook.uuid}</td>
+                        <td>${webhook.description || "" }</td>
+                        <td>${webhook.content_type}</td>
+                    </tr>
+                `))
+            });
+            // $( ".result" ).html( data );
+            // alert( "Load was performed." );
+        });
+    }
+
+    $( document ).ready(function() {
+        console.log( "ready!" );
+        loadList();
+    });
+
+    function insertRecord () {
+        const webhook = {
+            payload_url: $("#url").val(),
+            description:  $("#description").val(),
+            content_type:  $("#content_type").val(),
+        }
+
+        console.log(webhook);
+        $.post( server_url+"/api/webhook", webhook, function( data ) {
+            console.log(data);
+            alert("successfully added record");
+            loadList();
+        });
+    }
+
+    function deleteRecord(uuid){
+        // alert(uuid);
+        $.ajax({
+            url: server_url+"/api/webhook/"+uuid,
+            type: 'DELETE',
+            success: function(data) {
+                console.log(data);
+                alert("successfully removed record");
+                loadList();
+            }
+        });
+    }
+
+    let updating_uuid=null;
+
+    function getRecordForUpdate(uuid){
+        $.get( server_url+"/api/webhook/"+uuid, function( data ) {
+            $("#update_url").val(data.webhook.payload_url),
+            $("#update_description").val(data.webhook.description),
+            $("#update_content_type").val(data.webhook.content_type),
+
+            updating_uuid=uuid;
+            console.log(data);
+        });
+    }
+
+    function submitUpdate(){
+        $("#submit_update").prop('disabled', true);
+        $.ajax({
+            url: server_url+"/api/webhook/"+updating_uuid,
+            type: 'PUT',
+            data: {
+                payload_url: $("#update_url").val(),
+                description:  $("#update_description").val(),
+                content_type:  $("#update_content_type").val(),
+            },
+            success: function(data) {
+                console.log(data);
+                alert("successfully updated record");
+                loadList();
+                $("#modalButtonClose").click();
+                $("#submit_update").prop('disabled', false);
+            }
+        });
+    }
+</script>
+</body>
+</html>
