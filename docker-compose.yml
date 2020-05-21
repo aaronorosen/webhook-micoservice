@@ -1,6 +1,13 @@
 version: '3'
 
 services:
+    tests:
+        build: .
+        environment:
+          - CONFIG_ENV=testing
+          - MOCHA_REPORTER=spec
+        command: bash -c "npm test"
+
     api:
         build: .
         volumes:
