@@ -4,11 +4,14 @@
     <title>Webhook Crud</title>
     <!-- Latest compiled and minified Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+
+    <script src="js/main.js"></script>
+
 </head>
 <body>
 
 <!-- container -->
-<div class="container">
+<div class="container" id='page' style=''>
     <div class="page-header">
         <h4>Create Webhook</h4>
     </div>
@@ -16,12 +19,12 @@
         <form class="form-group" id="product-form">
             <div class="col-md-6">
                 <div class="form-group">
-                    <input type="text" name="url" class="form-control" placeholder="Enter Webhook URL" id="url">
+                    <input type="text" name="url" class="form-control" placeholder="Enter Webhook URL (REQUIRED)" id="url">
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
-                    <input type="text" name="description" class="form-control" placeholder="Decription" id="description">
+                    <input type="text" name="description" class="form-control" placeholder="Description (REQUIRED)" id="description">
                 </div>
             </div>
             <div class="col-md-6">
@@ -113,7 +116,6 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
  <!--  ALL AJAX SCRIPT WILL COME HERE -->
-  
 <script>
 
     const server_url = "http://localhost:3000";
@@ -143,71 +145,6 @@
         });
     }
 
-    $( document ).ready(function() {
-        console.log( "ready!" );
-        loadList();
-    });
-
-    function insertRecord () {
-        const webhook = {
-            payload_url: $("#url").val(),
-            description:  $("#description").val(),
-            content_type:  $("#content_type").val(),
-        }
-
-        console.log(webhook);
-        $.post( server_url+"/api/webhook", webhook, function( data ) {
-            console.log(data);
-            alert("successfully added record");
-            loadList();
-        });
-    }
-
-    function deleteRecord(uuid){
-        // alert(uuid);
-        $.ajax({
-            url: server_url+"/api/webhook/"+uuid,
-            type: 'DELETE',
-            success: function(data) {
-                console.log(data);
-                alert("successfully removed record");
-                loadList();
-            }
-        });
-    }
-
-    let updating_uuid=null;
-
-    function getRecordForUpdate(uuid){
-        $.get( server_url+"/api/webhook/"+uuid, function( data ) {
-            $("#update_url").val(data.webhook.payload_url),
-            $("#update_description").val(data.webhook.description),
-            $("#update_content_type").val(data.webhook.content_type),
-
-            updating_uuid=uuid;
-            console.log(data);
-        });
-    }
-
-    function submitUpdate(){
-        $("#submit_update").prop('disabled', true);
-        $.ajax({
-            url: server_url+"/api/webhook/"+updating_uuid,
-            type: 'PUT',
-            data: {
-                payload_url: $("#update_url").val(),
-                description:  $("#update_description").val(),
-                content_type:  $("#update_content_type").val(),
-            },
-            success: function(data) {
-                console.log(data);
-                alert("successfully updated record");
-                loadList();
-                $("#modalButtonClose").click();
-                $("#submit_update").prop('disabled', false);
-            }
-        });
-    }
 </script>
 </body>
 </html>
