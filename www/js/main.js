@@ -6,6 +6,34 @@ function init() {
     });
 }
 
+function loadList(){
+    $.get(server_url + "/api/webhook", function( data ) {
+        console.log(data.records);
+        $(".data-row").remove();
+        data.records.forEach(webhook => {
+            $("#table-data").append(
+                $(`<tr class='data-row'>
+                    <td>
+                        <button data-target="#myModal" data-toggle="modal"
+                            id="modalButtonOpen" type="button"
+                            onclick='getRecordForUpdate("${webhook.uuid}")'>
+                            Edit
+                        </button>
+
+                        <button onclick='deleteRecord("${webhook.uuid}")'>Delete</button>
+                    </td>
+                    <td>${webhook.payload_url}</td>
+                    <td>${webhook.uuid}</td>
+                    <td>${webhook.description || "" }</td>
+                    <td>${webhook.content_type}</td>
+                </tr>
+            `))
+        });
+        // $( ".result" ).html( data );
+        // alert( "Load was performed." );
+    });
+}
+
 function insertRecord () {
     const webhook = {
         payload_url: $("#url").val(),
