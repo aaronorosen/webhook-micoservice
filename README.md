@@ -1,5 +1,8 @@
-[![Build status](https://badge.buildkite.com/5cca4fed7c1a66d0fa7e554e93344365ad7a5c507d91fba496.svg)](https://buildkite.com/dreamstate/webhook-micoservice)
+# Test setup!
 
+[![Build status](https://badge.buildkite.com/5cca4fed7c1a66d0fa7e554e93344365ad7a5c507d91fba496.svg)](https://buildkite.com/dreamstate/webhook-micoservice)
+Frontend - https://vami.dreamstate-4-all.org
+API - https://vami.dreamstate-4-all.org
 
 # Quick start!
 
