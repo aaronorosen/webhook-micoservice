@@ -7,6 +7,7 @@ async function post(req) {
     const webhook = await service.createRecord({
         payload_url: req.body.payload_url,
         content_type: req.body.content_type || 'application/json',
+        description: req.body.description || '',
     }, req.state);
 
     return {
