@@ -6,6 +6,7 @@
 $ ./scripts/start.sh
 
 localhost:8082 --- frontend interface
+localhost:8081 --- API interface
 
 
 # Microservice template
