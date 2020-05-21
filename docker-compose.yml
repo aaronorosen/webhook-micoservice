@@ -8,16 +8,14 @@ services:
         environment:
           - CONFIG_ENV=testing
           - MOCHA_REPORTER=spec
-
+        ports:
+            - 8081:3000
     web:
         build: www/.
         volumes:
             - ./www:/www
         depends_on:
             - api
-        ports:
-            - 8081:3000
-
     web-server:
         image: nginx
         volumes:
