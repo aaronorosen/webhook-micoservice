@@ -1,3 +1,12 @@
+# Quick start!
+
+$ ./scripts/start.sh
+
+localhost:8082 --- frontend interface
+
+
+
+
 # Microservice template
 This is a Node.js microservice template, to be used as a boiler plate for new microservice projects
 
@@ -11,7 +20,6 @@ This is a Node.js microservice template, to be used as a boiler plate for new mi
 - Postman collection that documents API endpoints.
 
 ## Todo:
-- Fully dockerize it.
 - Add webtoken validation middleware.
 - create AWS health check api endpoint.
 - Do basic infrastructure as a code using terraform, to deploy as ECS on AWS.
