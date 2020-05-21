@@ -4,13 +4,19 @@ services:
     api:
         build: .
         volumes:
-            - /opt/data-copliot/vami_db.json:/home/copilot/vami/db.json
+          - ./db.json:/opt/data-copliot/vami
+        environment:
+          - CONFIG_ENV=testing
+          - MOCHA_REPORTER=spec
+
     web:
         build: www/.
         volumes:
             - ./www:/www
         depends_on:
             - api
+        ports:
+            - 8081:3000
 
     web-server:
         image: nginx

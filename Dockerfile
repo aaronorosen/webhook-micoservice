@@ -1,7 +1,7 @@
 FROM node:12
 
 # Create app directory
-WORKDIR /home/copilot/vami
+WORKDIR /home/copilot/vami/
 
 # Install app dependencies
 # A wildcard is used to ensure both package.json AND package-lock.json are copied
