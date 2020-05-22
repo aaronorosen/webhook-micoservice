@@ -26,9 +26,6 @@ This is a Node.js microservice template, to be used as a boiler plate for new mi
 
 ## Todo:
 - Add webtoken validation middleware.
-- create AWS health check api endpoint.
-- Do basic infrastructure as a code using terraform, to deploy as ECS on AWS.
-- 100% Code coverage on tests.
 
 # How to run it
 
