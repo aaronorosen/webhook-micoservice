@@ -44,7 +44,7 @@ function insertRecord () {
     console.log(webhook);
     $.post( server_url+"/api/webhook", webhook, function( data ) {
         console.log(data);
-        alert("successfully added record");
+        // alert("successfully added record");
         loadList();
     }).fail(function() {
         alert("api error")
@@ -58,7 +58,7 @@ function deleteRecord(uuid){
         type: 'DELETE',
         success: function(data) {
             console.log(data);
-            alert("successfully removed record");
+            // alert("successfully removed record");
             loadList();
         }
     });
@@ -89,7 +89,7 @@ function submitUpdate(){
         },
         success: function(data) {
             console.log(data);
-            alert("successfully updated record");
+            // alert("successfully updated record");
             loadList();
             $("#modalButtonClose").click();
             $("#submit_update").prop('disabled', false);
