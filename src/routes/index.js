@@ -1,22 +1,22 @@
 // Config available in
 // const config = require('../config/index');
 const express = require('express');
-const api = require('./api');
-const middleware = require('../middleware');
 const swaggerJSDoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
+const api = require('./api');
+const middleware = require('../middleware');
 
 // Initialize swagger-jsdoc -> returns validated swagger spec in json format
 const swaggerSpec = swaggerJSDoc({
-  definition: {
-    openapi: '3.0.0', // Specification (optional, defaults to swagger: '2.0')
-    info: {
-      title: 'Webhook Crud', // Title (required)
-      version: '1.0.0', // Version (required)
+    definition: {
+        openapi: '3.0.0', // Specification (optional, defaults to swagger: '2.0')
+        info: {
+            title: 'Webhook Crud', // Title (required)
+            version: '1.0.0', // Version (required)
+        },
     },
-  },
-  // Path to the API docs
-  apis: ['./src/routes/api.js'],
+    // Path to the API docs
+    apis: ['./src/routes/api.js'],
 });
 
 const router = express.Router();

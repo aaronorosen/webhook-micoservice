@@ -20,7 +20,7 @@ const router = express.Router();
  *     properties:
  *       payload_url:
  *         type: string
- *         description: url for the webhook 
+ *         description: url for the webhook
  *       description:
  *         type: string
  *       content-type:
@@ -34,7 +34,7 @@ const router = express.Router();
  *          properties:
  *            uuid:
  *              type: string
- *              description: unique id for the webhook 
+ *              description: unique id for the webhook
 */
 
 /**
@@ -54,7 +54,7 @@ const router = express.Router();
  *           webhook:
  *              $ref: '#/definitions/webhookModel'
  *           ok:
- *              type:boolean 
+ *              type:boolean
  *           error:
  *              type:boolean
 */
@@ -87,7 +87,7 @@ router.post(
  *           webhook:
  *              $ref: '#/definitions/webhookModel'
  *           ok:
- *              type:boolean 
+ *              type:boolean
  *           error:
  *              type:boolean
 */
@@ -116,7 +116,7 @@ router.get(
  *                schema:
  *                  $ref: '#/definitions/webhookModel'
  *           ok:
- *              type:boolean 
+ *              type:boolean
  *           error:
  *              type:boolean
 */
@@ -154,7 +154,7 @@ router.get(
  *                schema:
  *                  $ref: '#/definitions/webhookModel'
  *           ok:
- *              type:boolean 
+ *              type:boolean
  *           error:
  *              type:boolean
 */
@@ -186,7 +186,7 @@ router.put(
  *           webhook:
  *              $ref: '#/definitions/webhookModel'
  *           ok:
- *              type:boolean 
+ *              type:boolean
  *           error:
  *              type:boolean
 */
@@ -223,7 +223,7 @@ router.delete(
  *           webhook:
  *              $ref: '#/definitions/webhookModel'
  *           ok:
- *              type:boolean 
+ *              type:boolean
  *           error:
  *              type:boolean
 */
