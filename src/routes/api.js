@@ -49,7 +49,6 @@ const router = express.Router();
  *       - $ref: '#/definitions/webhookParams'
  *     responses:
  *       200:
- *         description: users
  *         schema:
  *           webhook:
  *              $ref: '#/definitions/webhookModel'
