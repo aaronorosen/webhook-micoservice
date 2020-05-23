@@ -35,6 +35,8 @@
     "lodash": "^4.17.15",
     "lodb": "^0.5.2",
     "read-pkg-up": "^6.0.0",
+    "swagger-jsdoc": "^4.0.0",
+    "swagger-ui-express": "^4.1.4",
     "uuid": "^3.3.3"
   },
   "devDependencies": {
