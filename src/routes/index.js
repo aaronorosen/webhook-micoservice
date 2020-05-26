@@ -9,12 +9,13 @@ const middleware = require('../middleware');
 // Initialize swagger-jsdoc -> returns validated swagger spec in json format
 const swaggerSpec = swaggerJSDoc({
     definition: {
-        openapi: '3.0.0', // Specification (optional, defaults to swagger: '2.0')
+        // openapi: '3.0.0', // Specification (optional, defaults to swagger: '2.0')
         info: {
             title: 'Webhook Crud', // Title (required)
             version: '1.0.0', // Version (required)
         },
     },
+    // basePath: '/api',
     // Path to the API docs
     apis: ['./src/routes/api.js'],
 });
