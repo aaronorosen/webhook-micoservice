@@ -21,10 +21,10 @@ const router = express.Router();
  *       payload_url:
  *         type: string
  *         description: url for the webhook
+ *       content_type:
+ *         type: string
  *       description:
  *         type: string
- *       content-type:
- *         type:string
  *   webhookModel:
  *      allOf:     # Combines the BasicErrorModel and the inline model
  *        - $ref: '#/definitions/webhookParams'
@@ -35,27 +35,40 @@ const router = express.Router();
  *            uuid:
  *              type: string
  *              description: unique id for the webhook
+ *   successResponse:
+ *     type: object
+ *     properties:
+ *       webhook:
+ *         type: object
+ *         description: url for the webhook
+ *         schema:
+ *           $ref: '#/definitions/webhookModel'
+ *       ok:
+ *         type: boolean
+ *       error:
+ *         type: boolean
 */
 
 /**
  * @swagger
  *
- * /webhook:
+ * /api/webhook:
  *   post:
  *     description: create new webhook
+ *     consumes:
+ *       - application/json
  *     produces:
  *       - application/json
  *     parameters:
- *       - $ref: '#/definitions/webhookParams'
+ *       - in: body
+ *         name: body
+ *         schema:
+ *              $ref: '#/definitions/webhookParams'
  *     responses:
  *       200:
+ *         type: object
  *         schema:
- *           webhook:
- *              $ref: '#/definitions/webhookModel'
- *           ok:
- *              type:boolean
- *           error:
- *              type:boolean
+ *           $ref: '#/definitions/successResponse'
 */
 
 router.post(
@@ -67,7 +80,7 @@ router.post(
 /**
  * @swagger
  *
- * /webhook/{uuid}:
+ * /api/webhook/{uuid}:
  *   get:
  *     description: get specific webhook
  *     produces:
@@ -81,14 +94,9 @@ router.post(
  *          required: true
  *     responses:
  *       200:
- *         description: users
+ *         type: object
  *         schema:
- *           webhook:
- *              $ref: '#/definitions/webhookModel'
- *           ok:
- *              type:boolean
- *           error:
- *              type:boolean
+ *           $ref: '#/definitions/successResponse'
 */
 
 router.get(
@@ -100,7 +108,7 @@ router.get(
 /**
  * @swagger
  *
- * /webhook:
+ * /api/webhook:
  *   get:
  *     description: list all webhooks
  *     produces:
@@ -129,7 +137,7 @@ router.get(
 /**
  * @swagger
  *
- * /webhook/{uuid}:
+ * /api/webhook/{uuid}:
  *   put:
  *     description: update specific webhooks
  *     produces:
@@ -142,20 +150,14 @@ router.get(
  *            description: unique id identifier for webhook
  *         required: true
  *       - in: body
- *         $ref: '#/definitions/webhookParams'
+ *         name: body
+ *         schema:
+ *              $ref: '#/definitions/webhookParams'
  *     responses:
  *       200:
- *         description: users
+ *         type: object
  *         schema:
- *           records:
- *              type: array
- *              items:
- *                schema:
- *                  $ref: '#/definitions/webhookModel'
- *           ok:
- *              type:boolean
- *           error:
- *              type:boolean
+ *           $ref: '#/definitions/successResponse'
 */
 router.put(
     '/webhook/:uuid',
@@ -166,7 +168,7 @@ router.put(
 /**
  * @swagger
  *
- * /webhook/{uuid}:
+ * /api/webhook/{uuid}:
  *   delete:
  *     description: delete specific webhook
  *     produces:
@@ -180,14 +182,9 @@ router.put(
  *          required: true
  *     responses:
  *       200:
- *         description: users
+ *         type: object
  *         schema:
- *           webhook:
- *              $ref: '#/definitions/webhookModel'
- *           ok:
- *              type:boolean
- *           error:
- *              type:boolean
+ *           $ref: '#/definitions/successResponse'
 */
 
 router.delete(
@@ -199,7 +196,7 @@ router.delete(
 /**
  * @swagger
  *
- * /webhook/{uuid}:
+ * /api/webhook/{uuid}:
  *   post:
  *     description: trigger specific webhook
  *     produces:
@@ -212,19 +209,15 @@ router.delete(
  *            description: unique id identifier for webhook
  *          required: true
  *        - in: body
+ *          name: body
  *          schema:
- *            type: object
- *            description: all parameters will be forward in webhook trigger call
+ *              type: object
+ *              description: all parameters will be forward in webhook trigger call
  *     responses:
  *       200:
- *         description: users
+ *         type: object
  *         schema:
- *           webhook:
- *              $ref: '#/definitions/webhookModel'
- *           ok:
- *              type:boolean
- *           error:
- *              type:boolean
+ *           $ref: '#/definitions/successResponse'
 */
 
 router.post(
