@@ -23,7 +23,7 @@
     "test": "nyc --check-coverage npm run test-all"
   },
   "dependencies": {
-    "async": "^3.1.0",
+    "async": "^3.2.2",
     "axios": "^0.19.2",
     "body-parser": "^1.19.0",
     "bunyan": "^1.8.12",
