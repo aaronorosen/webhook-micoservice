@@ -47,7 +47,7 @@
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-security": "^1.4.0",
-    "mocha": "^7.1.2",
+    "mocha": "^10.2.0",
     "nyc": "^14.1.1",
     "shx": "^0.3.2",
     "spec": "^1.0.1",
